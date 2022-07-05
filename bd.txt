@@ -40,5 +40,38 @@ is null é quando a pessoa não tem telefone. telefone = null é quando o valor 
 
 
 
+ALTER TABLE altera uma tabela no banco de dados. Com esse comando podemos adicionar, excluir ou modificar a tabela.
+
+ALTER TABLE pessoa
+ADD datanasc date; Criou uma coluna com o nome datanasc do tipo date;
+
+UPDATE serve para atualizar alguma tabela e suas colunas. Sendo UPDATE nometabela SET coluna = valor WHERE idpessoa = 1;
+
+UPDATE pessoa
+SET datanasc = "2005-05-05"
+WHERE idpessoa = 5; atualizei os campos da datanasc
+
+Função now(); mostra a data atual
+Função year(); transforma uma data em apenas o ano;
+
+select AVG( (year(now())- year(datanasc))) as media_idade from pessoa
+JOIN estcivil ON estcivil.idestcivil=pessoa.idestcivil
+where estcivil="solteiro"; Calcula a média de idade das pessoas solteiras. Quando usamos AVG em cima, não conseguimos usar outros nomes, a palavra reservada 'as' permite a gente escolher um nome para o resultado do nosso cálculo, no caso, o resultado do cálculo tem o nome de media_idade
+
+select nome, year(now())- year(datanasc) as idade
+from pessoa
+JOIN telefone ON pessoa.idpessoa=telefone.idpessoa
+where telefone is null and  year(now())- year(datanasc) < 18; calculando e mostrando alunos sem telefone menor de idade (NÃO SEI SE TA CERTA)
+
+select nome, email, estcivil, telefone, max(( year(now())- year(datanasc))) as idade
+from pessoa
+join estcivil on estcivil.idestcivil=pessoa.idestcivil
+left join telefone on pessoa.idpessoa=telefone.idpessoa
+where (( year(now())- year(datanasc))) = (select max(((year(now())-year(datanasc)))) from pessoa); Calculando a idade, comparando com a maior idade e mostrando o resultado
+
+select nome, ( year(now())- year(datanasc)) as idade
+from pessoa
+where (( year(now())- year(datanasc))) > (select avg((( year(now())- year(datanasc)))) from pessoa); Pessoas com idade maior que a média de idade
+
 A ferramenta de engenharia reversa do workbench mostra o nosso banco de dados na forma de tabelas, facilitando a leitura, podemos acessar ele apertando CTRL + R
 

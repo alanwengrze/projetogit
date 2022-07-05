@@ -1,0 +1,44 @@
+show databases; Mostra os bancos de dados na maquina
+use mydb; entra no banco de dados mydb
+show tables; Mostra as tabelas dentro do banco de dados
+select * from pessoa; mostra tudo da tabela pessoas
+
+JOIN = junção, é unir duas ou mais tabelas. Se vamos unir duas ou mais tabelas, o JOIN vai no lugar da virgula entre as tabelas. E no lugar do WHERE colocamos o ON
+select nome, email, estcivil from pessoa JOIN estcivil ON estcivil.idestcivil=pessoa.idestcivil; // Mostra tudo das duas tabelas (pessoa e estcivil)
+                                                          (tabela.idtabela=tabela.idtabela)
+
+select nome, email, telefone from pessoa JOIN telefone ON pessoa.idpessoa=telefone.idpessoa; // Mostra nome, email, telefone das tabelas pessoa e telefone das pessoas que tem telefone (a junção das duas tabelas)
+
+select nome, email, telefone from pessoa LEFT JOIN telefone ON pessoa.idpessoa=telefone.idpessoa; //Mostra nome, email, telefone das tabelas pessoa e telefone de todas as pessoas, inclusive de quem não tem telefone.
+
+O LEFT JOIN quer dizer que ele vai mostrar tudo da tabela em que está a esquerda, que nesse caso é a tabela pessoa, ou seja, além da junção, ele lista tudo o que está a esquerda. Quando usamos a condição junto (WHERE), ele vai olhar tudo o que tem no LEFT JOIN  e retornar apenas a condição.
+
+Sempre que for usar o JOIN tem que usar o ON
+
+Lembrando que o uso do WHERE é caso tenha alguma condição.
+
+select nome, email, estcivil from pessoa JOIN estcivil ON estcivil.idestcivil=pessoa.idestcivil WHERE estcivil = "solteiro"; // Mostrar apenas as pessoas que forem solteiras
+
+select nome, email, telefone from pessoa LEFT JOIN telefone ON pessoa.idpessoa=telefone.idpessoa WHERE telefone is null; Mostras apenas as pessoas que não tem telefone
+
+select nome, email, estcivil, telefone from pessoa
+JOIN estcivil ON estcivil.idestcivil=pessoa.idestcivil
+JOIN telefone on pessoa.idpessoa=telefone.idpessoa
+WHERE estcivil = "solteiro"; Mostrar os telefones e estcivil de quem for solteiro
+
+select nome, email, estcivil, telefone from pessoa
+JOIN estcivil ON estcivil.idestcivil=pessoa.idestcivil
+JOIN telefone on pessoa.idpessoa=telefone.idpessoa
+WHERE estcivil = "solteiro" or estcivil = "casado"; Mostrar os telefones e estcivil de quem for solteiro ou casado
+
+select nome from pessoa
+LEFT JOIN estcivil ON estcivil.idestcivil=pessoa.idestcivil
+LEFT JOIN telefone ON pessoa.idpessoa=telefone.idpessoa
+WHERE telefone is null and estcivil = "solteiro"; Mostrar nome de quem for solteiro e não tiver telefone
+
+is null é quando a pessoa não tem telefone. telefone = null é quando o valor do telefone é null
+
+
+
+A ferramenta de engenharia reversa do workbench mostra o nosso banco de dados na forma de tabelas, facilitando a leitura, podemos acessar ele apertando CTRL + R
+

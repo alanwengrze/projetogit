@@ -1,0 +1,44 @@
+RELAÇÃO DE N:N // VARIAS tabelas
+
+select pessoa.nome, curso.nome from matricula
+JOIN curso ON matricula.idcurso=curso.idcurso
+JOIN pessoa ON matricula.idpessoa=pessoa.idpessoa; // Mostrando o nome do curso e da pessoa em um banco de dados com Cardinalidade N:N (o pessoa.nome e curso.nome é para diferenciar o nome de cada um deles, se não usar assim, dá erro de ambiguidade)
+
+select curso.nome, pessoa.nome from curso
+LEFT JOIN matricula ON matricula.idcurso=curso.idcurso
+LEFT JOIN pessoa ON pessoa.idpessoa=matricula.idpessoa; // Mostrando todos os cursos cadastrados e os alunos matriculados
+
+SELECT nome, email, telefone, datamatricula from pessoa
+JOIN matricula ON pessoa.idpessoa=matricula.idpessoa
+JOIN telefone ON pessoa.idpessoa=telefone.idpessoa
+order by datamatricula; // Ordenar pela data de matricula
+
+SELECT email, curso.nome from matricula
+JOIN curso ON matricula.idcurso=curso.idcurso
+JOIN pessoa ON pessoa.idpessoa=matricula.idpessoa
+WHERE curso.nome='CT Informática'; // Mostrar o email e o curso de quem estiver cursando CT Informática
+
+SELECT telefone, curso.nome from matricula
+JOIN curso ON matricula.idcurso=curso.idcurso
+JOIN pessoa ON pessoa.idpessoa=matricula.idpessoa
+JOIN telefone ON pessoa.idpessoa=telefone.idpessoa
+WHERE curso.nome='CT Informática' and telefone is null;// Mostrar telefone de quem cursar CT Informática e não tem telefone
+
+SELECT nome, datamatricula, CASE
+WHEN datamatricula = '2019/01/01' THEN 'Calouro'
+WHEN datamatricula = '2018/01/01' THEN 'Veterano'
+END AS datanatricula from pessoa
+JOIN matricula ON pessoa.idpessoa=matricula.idpessoa; //Dar um tipo para quem for matriculado em 2019 para CALOURO e VETERANO para quem for de 2018 usando o CASE (parecido com o Swiftch Case da programação)
+
+UPDATE pessoa
+SET nome = 'nome sobrenome'
+WHERE idpessoa=5;
+select * from pessoa;
+select * from curso; // Atualizando os nomes para nomes reais
+
+SELECT UPPER(nome) from pessoa; // Mostrando os nomes das pessoas em letras maiúsculas com o UPPER()
+
+UPDATE pessoa
+SET email = 'nome_sobrenome@ifsc.edu.br'
+WHERE idpessoa=5;
+select * from pessoa; // Atualizando os emails para emails reais

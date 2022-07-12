@@ -30,6 +30,8 @@ WHEN datamatricula = '2018/01/01' THEN 'Veterano'
 END AS datanatricula from pessoa
 JOIN matricula ON pessoa.idpessoa=matricula.idpessoa; //Dar um tipo para quem for matriculado em 2019 para CALOURO e VETERANO para quem for de 2018 usando o CASE (parecido com o Swiftch Case da programação)
 
+UPDATE matricula SET idcurso = (SELECT idcurso FROM curso WHERE nome = 'CT Informática'); // Atualiza o curso dos alunos para CT Informática
+
 UPDATE pessoa
 SET nome = 'nome sobrenome'
 WHERE idpessoa=5;
@@ -39,6 +41,4 @@ select * from curso; // Atualizando os nomes para nomes reais
 SELECT UPPER(nome) from pessoa; // Mostrando os nomes das pessoas em letras maiúsculas com o UPPER()
 
 UPDATE pessoa
-SET email = 'nome_sobrenome@ifsc.edu.br'
-WHERE idpessoa=5;
-select * from pessoa; // Atualizando os emails para emails reais
+SET email = lower(concat(replace(nome,'','_'),'@ifsc.edu.br')); // Atualizando os emails para emails reais puxando os nomes e sobrenomes dos alunos
